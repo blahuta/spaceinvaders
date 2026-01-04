@@ -13,7 +13,8 @@
 #define UfoHeight 32.0f
 #define UfoSpeed 150.0f
 #define UfoSpawnInterval 40000
-typedef struct {
+typedef struct
+{
     SDL_FRect rect;
     float speed;
     int direction;
@@ -21,12 +22,13 @@ typedef struct {
     int type;
     int frame;
     bool exploding;
-    uint64_t explosionEnd;
-    SDL_Texture* texture;
+    uint64_t explosionStart;
+    SDL_Texture *texture;
     Projectile bullet;
 } Enemy;
 
-typedef struct {
+typedef struct
+{
     SDL_FRect rect;
     float speed;
     int direction;
@@ -34,22 +36,22 @@ typedef struct {
     int hp;
     bool active;
     bool exploding;
-    SDL_Texture* texture;
+    SDL_Texture *texture;
     uint64_t lastSpawnTime;
 } Ufo;
 
-void EnemiesTexture(SDL_Renderer* renderer);
+void EnemiesTexture(SDL_Renderer *renderer);
 void EnemiesBox(Enemy enemies[]);
 void EnemiesReset(Enemy enemies[]);
-void EnemiesInit(Enemy enemies[], SDL_Renderer* renderer);
+void EnemiesInit(Enemy enemies[], SDL_Renderer *renderer);
 void EnemiesUpdate(Enemy enemies[], uint64_t currentTime, float windowWidth, float dt);
-void EnemiesRender(Enemy enemies[], SDL_Renderer* renderer);
-void EnemiesRenderBullets(Enemy enemies[], SDL_Renderer* renderer);
+void EnemiesRender(Enemy enemies[], SDL_Renderer *renderer);
+void EnemiesRenderBullets(Enemy enemies[], SDL_Renderer *renderer);
 bool EnemiesDead(Enemy enemies[]);
 bool EnemiesLow(Enemy enemies[], float y);
 void EnemiesCleanup();
 
-void UfoInit(Ufo* ufo, SDL_Renderer* renderer);
-void UfoUpdate(Ufo* ufo, uint64_t currentTime, float windowWidth, float dt);
-void UfoRender(Ufo* ufo, SDL_Renderer* renderer);
-void UfoCleanup();
+void UfoInit(Ufo *ufo, SDL_Renderer *renderer);
+void UfoUpdate(Ufo *ufo, uint64_t currentTime, float windowWidth, float dt);
+void UfoRender(Ufo *ufo, SDL_Renderer *renderer);
+void UfoCleanup(Ufo *ufo);

@@ -1,17 +1,19 @@
 #include "bunker.h"
 #include "text.h"
 
-static SDL_Texture* TexLC[5]; //nevim zda je toto spravna moznost ulozeni textur, ale w/e
-static SDL_Texture* TexFull[5];
-static SDL_Texture* TexRC[5];
-static SDL_Texture* TexLM[5];
-static SDL_Texture* TexRM[5];
-static SDL_Texture* TexE[5];
+static SDL_Texture *TexLC[5];
+static SDL_Texture *TexFull[5];
+static SDL_Texture *TexRC[5];
+static SDL_Texture *TexLM[5];
+static SDL_Texture *TexRM[5];
+static SDL_Texture *TexE[5];
 static bool Loaded = false;
 
-void BunkersInit(Bunker bunkers[], SDL_Renderer* renderer, float windowWidth) {
-    
-    if (!Loaded) {
+void BunkersInit(Bunker bunkers[], SDL_Renderer *renderer, float windowWidth)
+{
+
+    if (!Loaded)
+    {
         TexLC[0] = LoadTexture(renderer, "texture/lc0.bmp");
         TexLC[1] = LoadTexture(renderer, "texture/lc1.bmp");
         TexLC[2] = LoadTexture(renderer, "texture/lc2.bmp");
@@ -30,7 +32,7 @@ void BunkersInit(Bunker bunkers[], SDL_Renderer* renderer, float windowWidth) {
         TexRC[3] = LoadTexture(renderer, "texture/rc3.bmp");
         TexRC[4] = LoadTexture(renderer, "texture/rc4.bmp");
 
-        TexLM[0] = LoadTexture(renderer, "texture/lm0.bmp"); 
+        TexLM[0] = LoadTexture(renderer, "texture/lm0.bmp");
         TexLM[1] = LoadTexture(renderer, "texture/lm1.bmp");
         TexLM[2] = LoadTexture(renderer, "texture/lm2.bmp");
         TexLM[3] = LoadTexture(renderer, "texture/lm3.bmp");
@@ -53,10 +55,10 @@ void BunkersInit(Bunker bunkers[], SDL_Renderer* renderer, float windowWidth) {
     float spacing = windowWidth / (BunkerCount + 1);
     float bW = 3 * Size;
 
-    for (int i = 0; i < BunkerCount; i++) {
+    for (int i = 0; i < BunkerCount; i++)
+    {
         float startX = spacing * (i + 1) - (bW / 2.0f);
         float startY = 500.0f;
-
 
         bunkers[i].parts[0].rect = (SDL_FRect){startX, startY, Size, Size};
         bunkers[i].parts[0].textures = TexLC;
@@ -90,14 +92,19 @@ void BunkersInit(Bunker bunkers[], SDL_Renderer* renderer, float windowWidth) {
     }
 }
 
-bool BunkersCheckCollision(Bunker* bunker, SDL_FRect* bulletRect) {
-    for (int i = 0; i < 6; i++) {
-        if (bunker->parts[i].active) {
-            SDL_FRect* r = &bunker->parts[i].rect;
-            if (CheckCollision(*r, *bulletRect)) {
-                
+bool BunkersCheckCollision(Bunker *bunker, SDL_FRect *bulletRect)
+{
+    for (int i = 0; i < 6; i++)
+    {
+        if (bunker->parts[i].active)
+        {
+            SDL_FRect *r = &bunker->parts[i].rect;
+            if (CheckCollision(*r, *bulletRect))
+            {
+
                 bunker->parts[i].damage++;
-                if (bunker->parts[i].damage >= 4) {
+                if (bunker->parts[i].damage >= 4)
+                {
                     bunker->parts[i].active = false;
                 }
                 return true;
@@ -107,20 +114,27 @@ bool BunkersCheckCollision(Bunker* bunker, SDL_FRect* bulletRect) {
     return false;
 }
 
-void BunkersRender(Bunker bunkers[], SDL_Renderer* renderer) {
-    for (int i = 0; i < BunkerCount; i++) {
-        for (int j = 0; j < 6; j++) {
-            BunkerPart* p = &bunkers[i].parts[j];
-            if (p->active && p->textures) {
+void BunkersRender(Bunker bunkers[], SDL_Renderer *renderer)
+{
+    for (int i = 0; i < BunkerCount; i++)
+    {
+        for (int j = 0; j < 6; j++)
+        {
+            BunkerPart *p = &bunkers[i].parts[j];
+            if (p->active && p->textures)
+            {
                 SDL_RenderTexture(renderer, p->textures[p->damage], NULL, &p->rect);
             }
         }
     }
 }
 
-void BunkersCleanup() {
-    if (Loaded) {
-        for(int i = 0; i < 5; i++) {
+void BunkersCleanup()
+{
+    if (Loaded)
+    {
+        for (int i = 0; i < 5; i++)
+        {
             SDL_DestroyTexture(TexLC[i]);
             SDL_DestroyTexture(TexFull[i]);
             SDL_DestroyTexture(TexRC[i]);

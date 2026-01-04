@@ -12,6 +12,8 @@ ufo proleti nad rojem mimozemstanu, proleti nahodne a pri zniceni prinasi vetsi 
 hra dokaze ulozit do textoveho souboru az 10 nejlepsich skore (bez upravy jmen :-())
 
 
+
+
 ## Ovladani
 sipka vlevo - posun doleva
 sipka vpravo - posun doprava
